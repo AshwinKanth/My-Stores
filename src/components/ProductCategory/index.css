@@ -1,0 +1,35 @@
+.categoryItem {
+    background-image: linear-gradient(to left, #4fa4f4, #d390e8);
+    list-style: none;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .categoryItem {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+
+.categoryName {
+    font-size: 15px;
+    font-family: "Roboto";
+    font-weight: 500;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px){
+    .categoryName{
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,13 @@
+.fav-list{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px;
+}
+
+@media screen and (max-width: 768px) {
+    .fav-list{
+        padding-top: 50px;
+    }
+}
