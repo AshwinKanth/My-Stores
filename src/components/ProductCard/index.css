@@ -1,6 +1,7 @@
     .productLink{
         width: 22%;
         color: #000000;
+        text-decoration: none;
     }
 
     .favIcon-container{

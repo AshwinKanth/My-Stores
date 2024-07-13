@@ -199,6 +199,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
+    text-decoration: none;
 }
 
 .cart-count-badge {
