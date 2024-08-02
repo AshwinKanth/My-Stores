@@ -80,7 +80,7 @@ class Navbar extends Component {
                         <li className='navitem'><GrFavorite size={20} className='icon' /></li>
                         </Link>
                         <Link to="/cart" className="homeLink">
-                            <BsCart3 size={20} className='icon' />
+                            <BsCart3 size={20} className='icon navitem' />
                             {this.renderCartItemsCount()}
                         </Link>
                     </div>

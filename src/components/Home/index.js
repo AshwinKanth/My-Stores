@@ -27,6 +27,7 @@ class Home extends Component {
     this.setState({ apiStatus: apiStatusConstant.inProgress })
     const {searchInput} = this.state
     const apiUrl = `https://dummyjson.com/products/search?q=${searchInput}&limit=0`
+    console.log(apiUrl)
     const options = {
       method: "GET"
     }
@@ -54,6 +55,7 @@ class Home extends Component {
   renderProducts = () => {
     const { productsList } = this.state
     const shouldShowProductsList = productsList.length > 0
+
     return shouldShowProductsList ?(
       <ul className="productsList-container">
         {productsList.map(eachItem => (
@@ -135,7 +137,6 @@ class Home extends Component {
         <Filters />
         <div className="home-container">
           {this.renderProductsView()}
-          
         </div>
       </>
     )

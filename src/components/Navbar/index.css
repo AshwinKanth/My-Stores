@@ -59,7 +59,7 @@
 
 .icons-container{
     display: flex;
-    align-items: center;    
+    align-items: center;
 }
 
 .login-icon-container{
@@ -98,6 +98,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+
     }
 }
 
@@ -106,7 +107,7 @@
         padding: 20px;
         display: flex;
         flex-direction: column;
-        width: 90%;
+        width: 89%;
     }
     
 }
@@ -224,4 +225,9 @@
 
   .navitem{
     list-style:none;
+    padding-top: 10px;
+  }
+
+  .homelink{
+    list-style: none;
   }

@@ -19,7 +19,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 100px;
+    height: 85vh;
 }
 
 
@@ -29,6 +29,6 @@
 
 @media screen and (max-width: 768px){
     .fav-empty-img{
-        width: 65%;
+        width: 60%;
     }
 }
