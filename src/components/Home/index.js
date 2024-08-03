@@ -42,7 +42,7 @@ class Home extends Component {
         category: eachItem.category,
         price: eachItem.price,
         rating: eachItem.rating,
-        images: eachItem.images[0],
+        thumbnail: eachItem.thumbnail,
         discountPercentage: eachItem.discountPercentage,
         stock: eachItem.stock
       }))

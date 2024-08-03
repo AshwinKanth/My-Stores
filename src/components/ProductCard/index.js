@@ -19,7 +19,7 @@ class ProductCard extends Component {
     render() {
         const { isFavourite } = this.state
         const { productData } = this.props
-        const { title, category, price, rating, images, discountPercentage, stock, id } = productData
+        const { title, category, price, rating, thumbnail, discountPercentage, stock, id } = productData
 
         const productRating = String(rating).slice(0, 3);
         const stockAvailability = stock > 10 ? "" : "Only few Left"
@@ -46,7 +46,7 @@ class ProductCard extends Component {
                                 )}
                             </div>
                             <Link className="productLink" to={`/products/${id}`}>
-                                <img src={images} alt={title} className='productimage' />
+                                <img src={thumbnail} alt={title} className='productimage' />
                                 <h1 className='productTitle'>{title}</h1>
                                 <p className='productCategory'><span className='category'>Category:</span> {category}</p>
                                 <div className='price-rating-container'>

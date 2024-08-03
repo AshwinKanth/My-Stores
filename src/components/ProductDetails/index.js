@@ -1,6 +1,11 @@
 import { Component } from "react"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import Loader from "react-loader-spinner";
+
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
 import Navbar from "../Navbar"
 import Reviews from "../Reviews";
 
@@ -12,7 +17,7 @@ import { CiCircleMinus } from "react-icons/ci";
 import "./index.css"
 import AppContext from "../../Context/AppContext";
 
-const apiStatusConstant ={
+const apiStatusConstant = {
   success: "SUCCESS",
   inProgress: "INPROGRESS",
   failure: "FAILURE",
@@ -21,7 +26,7 @@ const apiStatusConstant ={
 
 
 class ProductDetails extends Component {
-  state = { productData: [], reviewsData: []  , apiStatus: apiStatusConstant.initial,quantity:1}
+  state = { productData: [], reviewsData: [], apiStatus: apiStatusConstant.initial, quantity: 1, imagesList: [] }
 
   componentDidMount() {
     this.getProductDetails()
@@ -53,8 +58,12 @@ class ProductDetails extends Component {
     reviewerName: data.reviewerName
   })
 
+  getCaurosalImagesData = (data) => ({
+    images: data.images,
+  })
+
   getProductDetails = async () => {
-    this.setState({apiStatus: apiStatusConstant.inProgress})
+    this.setState({ apiStatus: apiStatusConstant.inProgress })
     const { match } = this.props
     const { params } = match
     const { id } = params
@@ -70,118 +79,153 @@ class ProductDetails extends Component {
     if (response.ok === true) {
       const fetchedData = await response.json();
       const updatedData = this.getFormattedData(fetchedData)
+
       const updateReviewsData = fetchedData.reviews.map(
         eachReview => this.getReviewsData(eachReview)
       )
 
-      this.setState({ productData: updatedData, reviewsData: updateReviewsData , apiStatus: apiStatusConstant.success})
-    }else{
-      this.setState({apiStatus: apiStatusConstant.failure})
+      const updatedCaurosalImages = fetchedData.images.map(
+        eachImage => this.getCaurosalImagesData(eachImage)
+      )
+
+      console.log(updatedCaurosalImages)
+
+      this.setState({ productData: updatedData, reviewsData: updateReviewsData, imagesList: updatedCaurosalImages, apiStatus: apiStatusConstant.success })
+    } else {
+      this.setState({ apiStatus: apiStatusConstant.failure })
     }
   }
 
-  onClickIncreaseQuantity = () =>{
-    this.setState(prevState => ({quantity: prevState.quantity+1}))
+  onClickIncreaseQuantity = () => {
+    this.setState(prevState => ({ quantity: prevState.quantity + 1 }))
   }
 
-  onClickDecreaseQuantity = () =>{
-    const {quantity} = this.state
-    if (quantity > 1){
-      this.setState(prevState => ({quantity: prevState.quantity-1}))
+  onClickDecreaseQuantity = () => {
+    const { quantity } = this.state
+    if (quantity > 1) {
+      this.setState(prevState => ({ quantity: prevState.quantity - 1 }))
     }
   }
 
-  renderProductDetails = () =>(
+
+  renderProductImages = () => {
+    var settings = {
+      dots: true,
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      pauseOnHover: true
+    };
+
+    const { imagesList } = this.state
+
+    return (
+      <div className="images-container">
+        <Slider {...settings}>
+          {imagesList.map(eachImage => (
+            <div key={eachImage.id}>
+              <img src={eachImage.images} alt="" className="slider-image" />
+            </div>
+          ))}
+        </Slider>
+      </div>
+    )
+  }
+
+  renderProductDetails = () => (
     <AppContext.Consumer>
-      {value =>{
-        const {addCartItems} = value
-        const { productData, reviewsData ,quantity} = this.state
+      {value => {
+        const { addCartItems } = value
+        const { productData, reviewsData, quantity } = this.state
         const { images, price, stock, title, category, discountPercentage, rating, returnPolicy, description, brand, warrantyInformation, shippingInformation, availabilityStatus } = productData
-    
+
         const productRating = String(rating).slice(0, 3);
         const stockAvailability = stock > 10 ? "" : "Only few Left";
 
-        const onClickAddCart =() =>{
-          addCartItems({...productData,quantity})
+        const onClickAddCart = () => {
+          addCartItems({ ...productData, quantity })
         }
 
-        return(
-      <div className="productDetails">
-        <div className="image-buttons-container">
-          <img src={images} alt={title} className="image" />
-          <div className="buttons-container">
-            <button type="button" className="buttons addCart" onClick={onClickAddCart}><BsCart3 size={14} /> ADD TO CART</button>
-            <Link to="/login">
-            <button type="button" className="buttons buyNow"> <MdElectricBolt size={14} /> BUY NOW</button>
-            </Link>
-          </div>
-        </div>
-        <div className="productInformation-container">
-          <h1 className="title">{title}</h1>
-          <p className="productDescription">{description}</p>
-          <p className="productCategory"> <span className='category'>Category:</span> {category}</p>
-          <p className="productCategory"> <span className='category'>brand:</span> {brand}</p>
-          <div className="rating-review-container">
-            <div className='productRating-container'>
-              <p className='product-rating'>{productRating}</p>
-              <img
-                src="https://assets.ccbp.in/frontend/react-js/star-img.png"
-                alt="star"
-                className="star"
-              />
+        return (
+          <div className="productDetails">
+            <div className="image-buttons-container">
+              <img src={images} alt={title} className="image" />
+              <div className="buttons-container">
+                <button type="button" className="buttons addCart" onClick={onClickAddCart}><BsCart3 size={14} /> ADD TO CART</button>
+                <Link to="/login">
+                  <button type="button" className="buttons buyNow"> <MdElectricBolt size={14} /> BUY NOW</button>
+                </Link>
+              </div>
             </div>
-            <p className="review">111 Ratings & 3 Rewiews</p>
+            <div className="productInformation-container">
+              <h1 className="title">{title}</h1>
+              <p className="productDescription">{description}</p>
+              <p className="productCategory"> <span className='category'>Category:</span> {category}</p>
+              <p className="productCategory"> <span className='category'>brand:</span> {brand}</p>
+              <div className="rating-review-container">
+                <div className='productRating-container'>
+                  <p className='product-rating'>{productRating}</p>
+                  <img
+                    src="https://assets.ccbp.in/frontend/react-js/star-img.png"
+                    alt="star"
+                    className="star"
+                  />
+                </div>
+                <p className="review">111 Ratings & 3 Rewiews</p>
+              </div>
+              <div className="priceDetails-container">
+                <p className="productDetailsPrice">₹{price} <span className="productDiscountPrice">₹{discountPercentage}</span></p>
+              </div>
+              <div className="quantity-container">
+                <button className="quantityButton" type="button" onClick={this.onClickDecreaseQuantity}>
+                  <CiCircleMinus size={20} />
+                </button>
+                <p>{quantity}</p>
+                <button className="quantityButton" type="button" onClick={this.onClickIncreaseQuantity}>
+                  <CiCirclePlus size={20} />
+                </button>
+              </div>
+              <p className="productStock">{stockAvailability}</p>
+              <p className="returnPolicy"><span className="span">Return policy:</span> {returnPolicy}</p>
+              <hr className="break" />
+              <div className="smButtons-container">
+                <button type="button" className="buttons addCart" onClick={onClickAddCart}><BsCart3 size={14} /> ADD TO CART</button>
+                <Link to="/login">
+                  <button type="button" className="buttons buyNow"> <MdElectricBolt size={14} /> BUY NOW</button>
+                </Link>
+              </div>
+              <div className="additionalInformation">
+                <h1 className="informationHeading">Additional Information</h1>
+                <p className="information"><span className="span">Warranty:</span> {warrantyInformation}</p>
+                <p className="information"><span className="span">Shipping:</span> {shippingInformation}</p>
+                <p className="information"><span className="span">Stock Availability:</span> {availabilityStatus}</p>
+              </div>
+              <hr className="break" />
+              <div className="reviews-rating-container">
+                <h1 className="informationHeading">Rating & Reviews</h1>
+                <ul className="reviewsList-container">
+                  {reviewsData.map(eachProduct => (
+                    <Reviews
+                      reviewDetails={eachProduct}
+                      key={eachProduct.id}
+                    />
+                  ))}
+                </ul>
+              </div>
+              {this.renderProductImages()}
+            </div>
           </div>
-          <div className="priceDetails-container">
-            <p className="productDetailsPrice">₹{price} <span className="productDiscountPrice">₹{discountPercentage}</span></p>
-          </div>
-          <div className="quantity-container">
-            <button className="quantityButton" type="button" onClick={this.onClickDecreaseQuantity}>
-            <CiCircleMinus size={20} />
-            </button>
-            <p>{quantity}</p>
-            <button className="quantityButton" type="button" onClick={this.onClickIncreaseQuantity}>
-              <CiCirclePlus size={20}/>
-            </button>
-          </div>
-          <p className="productStock">{stockAvailability}</p>
-          <p className="returnPolicy"><span className="span">Return policy:</span> {returnPolicy}</p>
-          <hr className="break" />
-          <div className="smButtons-container">
-            <button type="button" className="buttons addCart" onClick={onClickAddCart}><BsCart3 size={14} /> ADD TO CART</button>
-            <Link to="/login">
-            <button type="button" className="buttons buyNow"> <MdElectricBolt size={14} /> BUY NOW</button>
-            </Link>
-          </div>
-          <div className="additionalInformation">
-            <h1 className="informationHeading">Additional Information</h1>
-            <p className="information"><span className="span">Warranty:</span> {warrantyInformation}</p>
-            <p className="information"><span className="span">Shipping:</span> {shippingInformation}</p>
-            <p className="information"><span className="span">Stock Availability:</span> {availabilityStatus}</p>
-          </div>
-          <hr className="break" />
-          <div className="reviews-rating-container">
-            <h1 className="informationHeading">Rating & Reviews</h1>
-            <ul className="reviewsList-container">
-              {reviewsData.map(eachProduct => (
-                <Reviews
-                  reviewDetails={eachProduct}
-                  key={eachProduct.id}
-                />
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
         )
       }}
     </AppContext.Consumer>
   )
 
-  
+
   renderLoadingView = () => (
     <div className="loader-container" data-testid="loader">
-         <Loader
+      <Loader
         type="TailSpin"
         color="#00BFFF"
         height={50}
@@ -208,8 +252,8 @@ class ProductDetails extends Component {
   )
 
 
-  renderProductsDetailView = () =>{
-    const {apiStatus} = this.state
+  renderProductsDetailView = () => {
+    const { apiStatus } = this.state
 
     switch (apiStatus) {
       case apiStatusConstant.success:
@@ -231,7 +275,7 @@ class ProductDetails extends Component {
         <Navbar />
         <div className="productDetials-container">
           {this.renderProductsDetailView()}
-          
+
         </div>
       </>
     )

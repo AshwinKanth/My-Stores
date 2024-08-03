@@ -6,6 +6,7 @@ import Login from './components/Login';
 import CreateAccount from './components/CreateAccount';
 import Favourites from "./components/Favourites"
 import ProductCategoryItems from './components/ProductCategoryItems';
+// import ProductImagesCarousal from './components/ProductImagesCarousal';
 import NotFound from './components/NotFound';
 import { Route, Switch, Redirect } from "react-router-dom";
 import AppContext from './Context/AppContext';
@@ -123,6 +124,7 @@ class App extends Component {
             <Route exact path='/cart' component={Cart} />
             <Route exact path='/favourite' component={Favourites} />
             <Route exact path='/products/category/:slug' component={ProductCategoryItems} />
+            {/* <Route path="/products/:id" component={ProductImagesCarousal}/> */}
             <Route path="/not-found" component={NotFound} />
             <Redirect to="not-found" />
           </Switch>
