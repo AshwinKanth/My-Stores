@@ -47,6 +47,7 @@ const Cart = () => (
                   Remove all
                 </button>
                 <CartListView />
+                <hr className='hrBreak' />
                 <CartSummary />
               </div>
            )}

@@ -60,6 +60,7 @@ class ProductDetails extends Component {
 
   getCaurosalImagesData = (data) => ({
     images: data.images,
+    id: data.id
   })
 
   getProductDetails = async () => {
@@ -84,11 +85,7 @@ class ProductDetails extends Component {
         eachReview => this.getReviewsData(eachReview)
       )
 
-      const updatedCaurosalImages = fetchedData.images.map(
-        eachImage => this.getCaurosalImagesData(eachImage)
-      )
-
-      console.log(updatedCaurosalImages)
+      const updatedCaurosalImages = fetchedData.images;
 
       this.setState({ productData: updatedData, reviewsData: updateReviewsData, imagesList: updatedCaurosalImages, apiStatus: apiStatusConstant.success })
     } else {
@@ -110,7 +107,7 @@ class ProductDetails extends Component {
 
   renderProductImages = () => {
     var settings = {
-      dots: true,
+      dots: false,
       infinite: true,
       slidesToShow: 1,
       slidesToScroll: 1,
@@ -126,7 +123,7 @@ class ProductDetails extends Component {
         <Slider {...settings}>
           {imagesList.map(eachImage => (
             <div key={eachImage.id}>
-              <img src={eachImage.images} alt="" className="slider-image" />
+              <img src={eachImage} alt="" className="slider-image" />
             </div>
           ))}
         </Slider>
@@ -138,8 +135,8 @@ class ProductDetails extends Component {
     <AppContext.Consumer>
       {value => {
         const { addCartItems } = value
-        const { productData, reviewsData, quantity } = this.state
-        const { images, price, stock, title, category, discountPercentage, rating, returnPolicy, description, brand, warrantyInformation, shippingInformation, availabilityStatus } = productData
+        const { productData, reviewsData, quantity,imagesList } = this.state
+        const {images, price, stock, title, category, discountPercentage, rating, returnPolicy, description, brand, warrantyInformation, shippingInformation, availabilityStatus } = productData
 
         const productRating = String(rating).slice(0, 3);
         const stockAvailability = stock > 10 ? "" : "Only few Left";
@@ -151,7 +148,11 @@ class ProductDetails extends Component {
         return (
           <div className="productDetails">
             <div className="image-buttons-container">
-              <img src={images} alt={title} className="image" />
+              {imagesList.length > 1 ? (
+                this.renderProductImages()
+              ):(
+                <img src={images} alt={title} className="image" /> 
+              )}
               <div className="buttons-container">
                 <button type="button" className="buttons addCart" onClick={onClickAddCart}><BsCart3 size={14} /> ADD TO CART</button>
                 <Link to="/login">
@@ -214,7 +215,6 @@ class ProductDetails extends Component {
                   ))}
                 </ul>
               </div>
-              {this.renderProductImages()}
             </div>
           </div>
         )

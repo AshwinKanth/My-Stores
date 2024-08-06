@@ -188,6 +188,7 @@
 .menuItem-container{
     display: flex;
     align-items: center;
+    
 }
 
 .menuItem{
@@ -211,7 +212,7 @@
     font-weight: 500;
     border-radius: 50%;
     padding-left: 5px;
-    padding-top: 2px;
+    margin-top: 10px;
     padding-right: 5px;
     padding-bottom: 2px;
 

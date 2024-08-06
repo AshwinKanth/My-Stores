@@ -124,7 +124,6 @@ class App extends Component {
             <Route exact path='/cart' component={Cart} />
             <Route exact path='/favourite' component={Favourites} />
             <Route exact path='/products/category/:slug' component={ProductCategoryItems} />
-            {/* <Route path="/products/:id" component={ProductImagesCarousal}/> */}
             <Route path="/not-found" component={NotFound} />
             <Redirect to="not-found" />
           </Switch>

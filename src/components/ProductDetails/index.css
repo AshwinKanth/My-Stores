@@ -28,7 +28,14 @@
 
 
     .image {
-        width: 90%;
+        width: 70%;
+    }
+
+    @media (min-width: 768px) and (max-width: 1100px){
+        .image{
+            height: 50vh;
+            width: 100%;
+        }
     }
 
     .buttons-container {
@@ -61,7 +68,6 @@
         .buttons {
             height: 30px;
             width: 100px;
-            /* margin: 10px; */
             font-size: 10px;
         }
     }
@@ -218,11 +224,39 @@
 }
 
 .images-container{
-    width: 20%;
+    width: 30%;
+    height: 60vh;
+}
+
+@media (min-width: 768px) and (max-width: 1100px){
+    .images-container{
+        width: 80%;
+        height: 40vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .images-container{
+        width: 100%;
+        height: 30vh;
+        margin: 10px;
+    }
 }
 
 .slider-image{
     width: 100%;
-    height: 40vh;
+    height: 50vh;
 }
 
+@media screen and (max-width: 768px){
+    .slider-image{
+        width: 100%;
+        height: 30vh;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1100px){
+    .slider-image{
+        height: 40vh;
+    }
+}

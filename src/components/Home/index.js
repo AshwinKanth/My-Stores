@@ -27,7 +27,6 @@ class Home extends Component {
     this.setState({ apiStatus: apiStatusConstant.inProgress })
     const {searchInput} = this.state
     const apiUrl = `https://dummyjson.com/products/search?q=${searchInput}&limit=0`
-    console.log(apiUrl)
     const options = {
       method: "GET"
     }

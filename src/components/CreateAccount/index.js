@@ -19,7 +19,7 @@ const CreateAccount = () => (
                 <button className='signUpSubmitButton' type="submit">Sign Up</button>
             </form>
         </div>
-        <Link to="/login">
+        <Link to="/login" className='homeLink'>
         <p className='loginLink'>Existing user? Log in</p>
         </Link>
         </div>

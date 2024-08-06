@@ -15,7 +15,7 @@ const Login = () => (
                     <button className='loginButton' type="submit">Login</button>
                 </form>
             </div>
-            <Link to="/signup">
+            <Link to="/signup" className='homeLink'>
             <p className='createAccount'>New to My Store? Create an account</p>
             </Link>
         </div>
