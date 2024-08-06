@@ -29,8 +29,6 @@ const CartItem = (props) => (
                 removeCartItem(id)
             }
 
-            const itemTotalPrice = Math.round((price*quantity))
-
             return(
                 <li className='cart-item'>
                     <img src={images} alt={title} className='cart-product-image'/>
@@ -49,7 +47,7 @@ const CartItem = (props) => (
                             </button>
                         </div>
                         <div className='total-price-remove-container'>
-                            <p className='cart-total-price'>Rs {itemTotalPrice} /-</p>
+                            <p className='cart-total-price'>Rs {price} /-</p>
                             <button className='remove-button' type='button' onClick={onRemoveCartItem}>
                                 Remove
                             </button>
